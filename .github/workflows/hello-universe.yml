@@ -1,14 +1,18 @@
-name: Hello Universe
 on:
-  push:
-    branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
-  workflow_dispatch:
+  push: 
+    branches: 
+      - develop
+
 jobs:
-  build:
+  hello_world_job:
     runs-on: ubuntu-latest
+    name: A job to say hello
     steps:
-      - uses: gtamang001/javascript-actions@main
+      - name: Hello world action step
+        id: hello
+        uses: octocat/hello-world-javascript-action@v1.1
         with:
-          who-to-greet: 'Ganga Tamang'
+          who-to-greet: 'Mona the Octocat'
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
