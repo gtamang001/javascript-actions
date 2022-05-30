@@ -4,7 +4,7 @@
   "description": "A template for creating an Action using JavaScript",
   "main": "index.js",
   "scripts": {
-    "build": "ncc build index.js",
+    "build": "ncc build index.js --license licenses.txt",
     "test": "INPUT_GITHUB_TOKEN=1234567890 node dist/index.js"
   },
   "repository": {
