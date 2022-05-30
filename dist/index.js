@@ -8860,59 +8860,21 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-// require the libraries for actions
 const core = __nccwpck_require__(5127);
 const github = __nccwpck_require__(3134);
 
-// use an async function for the main tasks
-async function main() {
-
-    // get the GITHUB_TOKEN from input and use it to create an octokit client
-    const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
-    const octokit = github.getOctokit(GITHUB_TOKEN);
-
-    // get the context from the github package
-    const { context } = __nccwpck_require__(3134)
-
-    // log the context
-    console.log( JSON.stringify(context.payload, null, "    ") );
-
-    // see if the payload has an action (push events don't have an action)
-    if (!context.payload.action) {
-        core.warning("This action should only be used with pull requests.");
-        return;
-    }
-
-    // if this pull request is being opened for the first time,
-    // the payload action will be 'opened'. otherwise it will be some
-    // other pull_request action. Take a look at the Webhook payload
-    // object for a pull request event here:
-    // https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
-    if (context.payload.action === "opened") {
-
-        // add a comment to the PR
-        await octokit.rest.issues.createComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.payload.number,
-            body: 'Thank you for submitting a pull request! We will try to review this as soon as we can.'
-        });
-
-        // add a label to the PR
-        await octokit.rest.issues.addLabels({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.payload.number,
-            labels: ['acknowledged']
-        })
-    } else {
-        return;
-    }
+try {
+  // `who-to-greet` input defined in action metadata file
+  const nameToGreet = core.getInput('who-to-greet');
+  console.log(`Hello ${nameToGreet}!`);
+  const time = (new Date()).toTimeString();
+  core.setOutput("time", time);
+  // Get the JSON webhook payload for the event that triggered the workflow
+  const payload = JSON.stringify(github.context.payload, undefined, 2)
+  console.log(`The event payload: ${payload}`);
+} catch (error) {
+  core.setFailed(error.message);
 }
-
-// call the function
-main();
-
 })();
 
 module.exports = __webpack_exports__;
