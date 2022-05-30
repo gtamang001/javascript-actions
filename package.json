@@ -2,7 +2,7 @@
   "name": "javascript-actions",
   "version": "1.0.0",
   "description": "A template for creating an Action using JavaScript",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "ncc build index.js",
     "test": "INPUT_GITHUB_TOKEN=1234567890 node dist/index.js"
