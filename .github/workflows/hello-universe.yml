@@ -11,4 +11,4 @@ jobs:
     steps:
       - uses: gtamang001/javascript-actions@main
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          who-to-greet: 'Ganga Tamang'
