@@ -1,4 +1,4 @@
-nam: Test Action to check javascript action
+name: Test Action to check javascript action
 on:
   push: 
     branches: 
